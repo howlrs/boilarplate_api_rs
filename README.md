@@ -1,15 +1,17 @@
-# Rust x Axum API Boilerplate for me
-Rust, Axumで認証をもつAPIを実装する際のボイラープレート
-以下の機能を実装しています。
+# AIに依頼する構文をテンプレート化する
+
+
+
 
 
 ## Features
-- Rust 2024, v1.85
-- Google Cloud Firestore
-- Hashed password/Verify password
-- Docker for Google Cloud Run
-- endpoints: Signup/Signin
-- endpoints: public_health, private_health
+- AIによるチェックプロンプトの実装
+
+## Endpoints
+- クライアントに対してのメールリファクタリング
+- 文章内整合性チェック
+- テンプレート化（テンプレート文書への現情報の代入）
+- 
 
 ## Envs
 <!-- Output level of the logger [trace, debug, info, warn, error] -->

@@ -37,15 +37,19 @@ async fn main() {
         // ユーザー登録
         // パスワードハッシュ化
         // データベース登録
-        .route("/api/public/signup", post(api::user::signup))
+        .route("/api/public/user/signup", post(api::user::signup))
         // ユーザーログイン
         // ユーザー検索
         // パスワード検証
         // JWT 生成
-        .route("/api/public/signin", post(api::user::signin))
+        .route("/api/public/user/signin", post(api::user::signin))
         // 認証後のエンドポイント例
         // JWT -> Claims検証
         .route("/api/private/health", get(api::initial::private_health))
+        .route(
+            "/api/private/ai/{target_ai}/{prompt_type}",
+            post(api::checker::switcher),
+        )
         .layer(
             CorsLayer::new()
                 .allow_methods([
@@ -57,7 +61,10 @@ async fn main() {
                 ])
                 .allow_origin(origin)
                 // JSON でのリクエストを許可
-                .allow_headers(["Content-Type".parse().unwrap()]),
+                .allow_headers([
+                    "Content-Type".parse().unwrap(),
+                    "Authorization".parse().unwrap(),
+                ]),
         )
         .with_state(db);
 

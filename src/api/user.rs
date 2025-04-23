@@ -75,11 +75,11 @@ pub async fn signup(
     // Imutableな変数を作成
     let user = user;
 
-    // 同じemailのユーザーがいる場合はエラーを返す
-    let key = user.email.clone();
+    // 同じnameのユーザーがいる場合はエラーを返す
+    let key = user.user_id.clone();
     // ユーザー情報をDBに登録
     match db
-        .create::<crate::models::user::User>("users", key.as_str(), user)
+        .create::<crate::models::user::User>("user", key.as_str(), user)
         .await
     {
         Ok(_) => response_handler(StatusCode::OK, "success".to_string(), None, None),
@@ -158,7 +158,6 @@ pub async fn signin(
     let user = match serde_json::from_value::<crate::models::user::User>(v) {
         Ok(user) => user,
         Err(e) => {
-            error!("serde_json::from_value error: {:?}", e);
             return response_handler(
                 StatusCode::BAD_REQUEST,
                 "error".to_string(),
@@ -171,7 +170,7 @@ pub async fn signin(
     // ログイン用の検証
     // - key: emailでユーザーを検索
     let result = match db
-        .read::<crate::models::user::User>("users", &user.email)
+        .read::<crate::models::user::User>("user", &user.user_id)
         .await
     {
         Ok(user) => user,

@@ -1,4 +1,5 @@
 use axum::{Json, http::StatusCode, response::IntoResponse};
+use log::error;
 use serde_json::{Value, json};
 
 // レスポンスを返す関数
@@ -14,6 +15,7 @@ pub fn response_handler(
     });
 
     if let Some(error_msg) = err {
+        error!("Error: {}", error_msg);
         body["error"] = json!(error_msg);
     } else {
         body["data"] = json!(data);
